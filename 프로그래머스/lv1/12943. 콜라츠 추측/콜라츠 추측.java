@@ -3,11 +3,7 @@ class Solution {
         int answer = 0;
         long var=num;
         int n=0;
-        if(num==1) {
-            answer=0;
-            return answer;
-        }
-        
+
         while (true) {
             if (var%2==0) {
                 var/=2;
