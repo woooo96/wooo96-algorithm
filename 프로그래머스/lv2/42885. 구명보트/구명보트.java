@@ -2,19 +2,28 @@ import java.util.*;
 class Solution {
     public int solution(int[] people, int limit) {
         int answer = 0;
-
+        List<Integer> peopleList = new ArrayList<>();
         Arrays.sort(people);
+        for (int i = 0; i < people.length; i++) {
+            peopleList.add(i, people[i]);
+        }
 
-        int right = people.length - 1;
-        int left = 0;
-
-        while (right >= left) {
-            int weight = people[right];
-            if (weight + people[left] <= limit) {
-                left++;
+        int i=1;
+        while(peopleList.size()>0) {
+            if (peopleList.size()-i==0) {
+                peopleList.remove(0);
+                i=1;
+                answer++;
+                continue;
             }
-            right--;
-            answer++;
+            if (peopleList.get(0)+peopleList.get(peopleList.size()-i) <= limit) {
+                peopleList.remove(0);
+                peopleList.remove(peopleList.size()-i);
+                i=1;
+                answer++;
+            } else {
+                i++;
+            }
         }
         return answer;
     }
