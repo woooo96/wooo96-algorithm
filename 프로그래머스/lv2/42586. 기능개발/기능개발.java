@@ -4,7 +4,7 @@ class Solution {
         List<Integer> answer = new ArrayList<>();
         int[] tempArray = new int[progresses.length];
         int index = 0;
-        int answerTmp=0;
+        int answerTmp=1;
         for (int i = 0; i < progresses.length; i++) {
             int temp=1;
             while(true) {
@@ -12,19 +12,15 @@ class Solution {
                 temp++;
             }
             tempArray[i]=temp;
-        }
-
-        index = tempArray[0];
-        for (int i = 1; i < tempArray.length; i++) {
-            if(tempArray[i] > index) {
-                answer.add(++answerTmp);
-                answerTmp=0;
+            if ((i > 0 && tempArray[i] > index) || i==tempArray.length-1) {
                 index=tempArray[i];
-            } else answerTmp++;
+                answer.add(answerTmp);
+                answerTmp=1;
+            }
+            else answerTmp++;
 
-            if (i==tempArray.length-1) answer.add(++answerTmp);
         }
-
+        
         return answer;
     }
 }
