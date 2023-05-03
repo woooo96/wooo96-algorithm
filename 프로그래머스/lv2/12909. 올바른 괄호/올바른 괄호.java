@@ -1,25 +1,14 @@
+import java.util.*;
 class Solution {
-    boolean solution(String s) {
-        boolean answer = true;
-        int count =0;
+public boolean solution(String s) {
+        boolean answer=false;
+        Stack<Character> st = new Stack<>();
+        if(s.charAt(0)==')') return answer;
         for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i)=='(') {
-                count++;
-            } else {
-                count--;
-            }
-            if (count<0) {
-                answer=false;
-                return answer;
-            }
+            if(st.isEmpty() || s.charAt(i)=='(') st.push(s.charAt(i));
+            else st.pop();
         }
-
-        if (count==0) {
-            answer = true;
-        } else {
-            answer = false;
-        }
-
+        answer = st.isEmpty() ? true : false;
         return answer;
     }
 }
