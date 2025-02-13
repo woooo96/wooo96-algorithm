@@ -4,29 +4,27 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int num = Integer.parseInt(st.nextToken());
-        int quNum = Integer.parseInt(st.nextToken());
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		
+		int nCnt = Integer.parseInt(st.nextToken());
+		int qCnt = Integer.parseInt(st.nextToken());
+		
+		long[] sumArr = new long[nCnt + 1];
+		st = new StringTokenizer(br.readLine());
+		
+		for(int i=1; i < nCnt+1; i++) {
+			sumArr[i] = sumArr[i-1] +Integer.parseInt(st.nextToken());
+		}
+		
+		for (int i = 0; i < qCnt; i++) {
+			st = new StringTokenizer(br.readLine());
+			int num1 = Integer.parseInt(st.nextToken());
+			int num2 = Integer.parseInt(st.nextToken());
+			System.out.println(sumArr[num2] - sumArr[num1 -1]) ;
+		}
+		
+	}
 
-        long[] s = new long[num];
-        st = new StringTokenizer(br.readLine());
-
-        for (int i = 0; i < num; i++) {
-            s[i] = i==0 ? Integer.parseInt(st.nextToken()) : s[i-1]+Integer.parseInt(st.nextToken());
-        }
-
-        for (int i = 0; i < quNum; i++) {
-            st = new StringTokenizer(br.readLine());
-            int num1 = Integer.parseInt(st.nextToken())-2;
-            int num2 = Integer.parseInt(st.nextToken())-1;
-            if (num1<0) {
-                System.out.println(s[num2]);
-            } else {
-                System.out.println(s[num2]-s[num1]);
-            }
-        }
-
-    }
 }
