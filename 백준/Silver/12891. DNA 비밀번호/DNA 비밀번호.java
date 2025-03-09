@@ -4,86 +4,93 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int checkArr[];
-    static int myArr[];
-    static int checkSecret;
+	static int checkArr[];
+	static int nowArr[];
+	static int correctDna = 0;
+	
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int S = Integer.parseInt(st.nextToken());
-        int P = Integer.parseInt(st.nextToken());
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		
+		int len = Integer.parseInt(st.nextToken());	//문자의 길이 
+		int arrLen = Integer.parseInt(st.nextToken());	//부분배열의 길이 
+		
+		int answer = 0;
+		
+		char arr[] = new char[len]; //문자열
+		checkArr = new int[4];	//dna 규칙 배열
+		nowArr = new int[4];	//현재 부분문자열 배열의 dna 상태 배열  
+		arr = br.readLine().toCharArray();
+		
+		st = new StringTokenizer(br.readLine());
+		br.close();
+		
+		for (int i = 0; i < 4; i++) {
+			checkArr[i] = Integer.parseInt(st.nextToken());
+			if (checkArr[i] == 0) {
+				correctDna++;
+			}
+		}
+		for (int i = 0; i < arrLen; i++) {
+			add(arr[i]);		
+		}
 
-        int Result = 0;
-        checkArr = new int[4];
-        myArr = new int[4];
-        checkSecret = 0;
+		if (correctDna == 4) answer++;
+		
+		for (int i = arrLen; i < len; i++) {
+			int j = i - arrLen;
+			add(arr[i]);
+			remove(arr[j]);
+			if (correctDna == 4) answer++;
+		}
+		
+		System.out.println(answer);
 
-        char[] array = br.readLine().toCharArray();
-        st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < 4; i++) {
-            checkArr[i] = Integer.parseInt(st.nextToken());
-            if (checkArr[i] == 0) checkSecret++;
-        }
-        for (int i = 0; i < P; i++) {
-            Add(array[i]);
-        }
-
-        if (checkSecret == 4) Result++;
-
-        for (int i = P; i < S; i++) {
-            int j = i - P;
-            Add(array[i]);
-            Remove(array[j]);
-            if (checkSecret == 4) Result++;
-        }
-        System.out.println(Result);
-        br.close();
-    }
-
-
-    private static void Add(char c) {
-        switch (c) {
-            case 'A':
-                myArr[0]++;
-                if (checkArr[0] == myArr[0]) checkSecret++;
-                break;
-            case 'C':
-                myArr[1]++;
-                if (checkArr[1] == myArr[1]) checkSecret++;
-                break;
-            case 'G':
-                myArr[2]++;
-                if (checkArr[2] == myArr[2]) checkSecret++;
-                break;
-            case 'T':
-                myArr[3]++;
-                if (checkArr[3] == myArr[3]) checkSecret++;
-                break;
-        }
-    }
-
-    private static void Remove(char c) {
-        switch (c) {
-            case 'A':
-                if (checkArr[0] == myArr[0]) checkSecret--;
-                myArr[0]--;
-                break;
-            case 'C':
-                if (checkArr[1] == myArr[1]) checkSecret--;
-                myArr[1]--;
-                break;
-            case 'G':
-                if (checkArr[2] == myArr[2]) checkSecret--;
-                myArr[2]--;
-                break;
-            case 'T':
-                if (checkArr[3] == myArr[3]) checkSecret--;
-                myArr[3]--;
-                break;
-        }
-    }
+	}
+	
+	private static void add (char c) {
+		switch (c) {
+		case 'A':
+			nowArr[0]++;
+			if (nowArr[0] == checkArr[0]) correctDna++;
+			break;
+		case 'C':
+			nowArr[1]++;
+			if (nowArr[1] == checkArr[1]) correctDna++;
+			break;
+		case 'G':
+			nowArr[2]++;
+			if (nowArr[2] == checkArr[2]) correctDna++;
+			break;
+		case 'T':
+			nowArr[3]++;
+			if (nowArr[3] == checkArr[3]) correctDna++;
+			break;
+		}
+	}
+	
+	private static void remove (char c) {
+		switch (c) {
+		case 'A':
+			if (nowArr[0] == checkArr[0]) correctDna--;
+			nowArr[0]--;
+			break;
+		case 'C':
+			if (nowArr[1] == checkArr[1]) correctDna--;
+			nowArr[1]--;
+			break;
+		case 'G':
+			if (nowArr[2] == checkArr[2]) correctDna--;
+			nowArr[2]--;
+			break;
+		case 'T':
+			if (nowArr[3] == checkArr[3]) correctDna--;
+			nowArr[3]--;
+			break;
+		}
+	}
 }
-
 
 
